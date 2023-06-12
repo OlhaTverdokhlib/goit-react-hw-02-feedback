@@ -3,7 +3,7 @@ import Statistics from './Statistics';
 import Notification from './Notification';
 import FeedbackOptions from './FeedbackOptions';
 import Section from './Section';
-import appStyles from "./App.module.css";
+import appStyles from './App.module.css';
 
 class App extends Component {
   state = {
@@ -16,24 +16,23 @@ class App extends Component {
     this.setState(prevState => {
       return { [item]: prevState[item] + 1 };
     });
-    this.countTotalFeedback();
   };
 
   countTotalFeedback() {
-    return this.state.good + this.state.neutral + this.state.bad;
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
   }
 
   countPositiveFeedbackPercentage() {
     return Math.round(
       (this.state.good /
-        (this.countTotalFeedback() === 0 ? 1 : this.countTotalFeedback())) *
-        100
+        (this.countTotalFeedback() ??  1 )) * 100
     );
   }
 
   render() {
     return (
-      <div className={appStyles.container }>
+      <div className={appStyles.container}>
         <Section title="Please leave feedback">
           <FeedbackOptions
             options={['good', 'neutral', 'bad']}
